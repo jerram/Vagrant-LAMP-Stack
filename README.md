@@ -20,7 +20,7 @@ The idea is for developers to fork this and add additional software and configur
 ## Installation
 Clone this repository
 
-    $ git clone git@github.com:MiniCodeMonkey/Vagrant-LAMP-Stack.git
+    $ git clone git@github.com:jerram/Vagrant-LAMP-Stack.git
 
 Place your website in the `public_html` folder
 
