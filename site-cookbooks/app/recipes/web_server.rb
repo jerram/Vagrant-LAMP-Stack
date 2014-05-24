@@ -4,7 +4,7 @@
 #
 # Copyright 2013, Mathias Hansen
 #
-
+	
 # Install Apache
 include_recipe "openssl"
 include_recipe "apache2"
@@ -18,6 +18,7 @@ include_recipe "apache2::mod_ssl"
 #include_recipe "php"
 
 # Use PHP 5.4
+# sudo add-apt-repository ppa:ondrej/php5
 apt_repository "php54" do
 uri "http://ppa.launchpad.net/ondrej/php5-oldstable/ubuntu"
 distribution node['lsb']['codename']
@@ -26,8 +27,8 @@ keyserver "keyserver.ubuntu.com"
 key "E5267A6C"
 end
 
-#sudo apt-add-repository -y ppa:chris-lea/node.js
 # Use NodeJS 0.10.28
+# sudo apt-add-repository -y ppa:chris-lea/node.js
 apt_repository "nodejs" do
 uri "http://ppa.launchpad.net/chris-lea/node.js/ubuntu"
 distribution node['lsb']['codename']
@@ -50,15 +51,31 @@ bash "fix-phpcomments" do
 end
 
 # Install LESS
-bash "less" do
-  code "sudo npm install -g less"
-  notifies :restart, resources("service[apache2]"), :delayed  
-end
+#bash "less" do
+#  code <<-EOH
+  #sudo apt-get update & sudo apt-get upgrade -y
+  #touch /home/vagrant/.npmrc
+  #mkdir /home/vagrant/.local
+  #chown vagrant:vagrant /home/vagrant/.npmrc
+  #chown vagrant:vagrant /home/vagrant/.local
+  #echo 'registry = "http://registry.npmjs.org/"' | tee -a /home/vagrant/.npmrc
+  #sudo npm install -g less
+#  EOH
+#end
 
 # Install Composer
 bash "composer" do
   code <<-EOH
     curl -s https://getcomposer.org/installer | php
     sudo mv composer.phar /usr/local/bin/composer
+  EOH
+end
+
+# Prepare web root
+bash "webroot" do
+  code <<-EOH
+    sudo mkdir -p /var/vhosts/symfony/web
+    echo 'symfony folders set up' | sudo tee -a /var/vhosts/symfony/web/index.html
+    sudo chown www-data:www-data -R /var/vhosts
   EOH
 end

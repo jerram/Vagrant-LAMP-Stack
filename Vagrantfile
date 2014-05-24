@@ -30,7 +30,7 @@
     config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
     # Set share folder
-    config.vm.synced_folder "./" , "/opt/" + project_name + "/", :mount_options => ["dmode=777", "fmode=775"]
+    config.vm.synced_folder "./" , "/opt/vagrant/", :mount_options => ["dmode=777", "fmode=775"]
 
     # Use hostonly network with a static IP Address and enable
     # hostmanager so we can have a custom domain for the server
@@ -67,10 +67,10 @@
           :docroot        => "/var/vhosts/" + project_name + "/web",
 
           # General packages
-          :packages   => %w{ vim git screen curl acl git mcrypt mysql-server nodejs npm sendmail },
+          :packages   => %w{ vim git screen curl acl git mcrypt mysql-server nodejs npm sendmail python-software-properties },
           
           # PHP packages
-          :php_packages   => %w{ php5-curl php5-dev php5-gd php5-intl libicu-dev php5-mcrypt php5-memcached php5-mysql phpmyadmin }
+          :php_packages   => %w{ php-apc php5-curl php5-dev php5-gd php5-intl libicu-dev php5-mcrypt php5-memcached php5-mysql phpmyadmin }
 
         },
         :mysql => {
